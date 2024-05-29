@@ -1,0 +1,34 @@
+/* style1.css */
+
+/* Apply styles to the container div */
+.admin {
+    padding: 20px;
+}
+
+/* Apply styles to labels */
+label {
+    width: 120px; /* Adjust width as needed */
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+/* Apply styles to textboxes */
+textbox {
+    width: 200px; /* Adjust width as needed */
+}
+
+/* Apply styles to error messages */
+.error-message {
+    color: red;
+}
+
+/* Apply styles to radiogroup */
+radiogroup {
+    margin-left: 20px; /* Adjust margin as needed */
+}
+
+/* Apply styles to radio buttons */
+.radio {
+    margin-right: 10px;
+}

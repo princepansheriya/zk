@@ -1,0 +1,11 @@
+.label {
+	color: black;
+	font-size: 16px;
+}
+.main-section{
+	padding: 20px;
+	margin: 20px;
+}
+.sub-section{
+    padding: 20px 0
+}

@@ -1,0 +1,49 @@
+@charset "ISO-8859-1";
+
+.head {
+	padding-left: 90px;
+	padding-bottom: 9px;
+}
+
+.head-row {
+	border-bottom: 1px solid black;
+}
+span.z-menuitem-text {
+    padding-right: 34px;
+}
+.menui {
+	padding: 20px;
+}
+
+.menu-label {
+	font-size: 20px;
+}
+
+.z-menu-text, .z-menuitem-text {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 17px;
+	font-weight: normal;
+	display: inline-block;
+	line-height: 16px;
+	text-shadow: 0 1px #fff;
+	padding-bottom: 7px;
+	padding-left: 54px;
+}
+
+.z-menubar {
+	background: none !important;
+	border: none !important;
+}
+li img{
+	display: none;
+}
+.z-menu-hover>.z-menu-content {
+	background: none !important;
+	border: none !important;
+}
+
+.z-menu-hover>.z-menu-content, .z-menuitem-hover>.z-menuitem-content {
+	background: none !important;
+	border: none !important;
+}
+

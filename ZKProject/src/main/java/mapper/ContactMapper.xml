@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.ContactMapper">
+
+	<select id="checkUserExistenceForLogin" resultType="int"
+		parameterType="model.User">
+		SELECT id
+		FROM user
+		WHERE username = #{username} AND
+		password = #{password}
+	</select>
+
+	<select id="getAllCategories" resultType="model.Category">
+		SELECT id AS
+		id, name AS
+		name FROM category
+	</select>
+
+	<insert id="insertContact" parameterType="model.Contact"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO contact (status,
+		company_name, short_name, created_by,
+		created_on)
+		VALUES (#{status},
+		#{companyName}, #{shortName}, #{createdBy}, #{createdOn})
+	</insert>
+
+	<insert id="insertContactOffice"
+		parameterType="model.ContactOffice" useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO contact_office (contact_id, office_name,
+		address_1, address_2,
+		town_city, postcode, country, telephone_1,
+		telephone_2, fax, mobile,
+		email, url, status)
+		VALUES (#{contactId},
+		#{officeName}, #{address1}, #{address2}, #{townCity},
+		#{postcode},
+		#{country}, #{telephone1}, #{telephone2}, #{fax},
+		#{mobile}, #{email},
+		#{url}, #{status})
+	</insert>
+
+	<insert id="insertContactCategory"
+		parameterType="model.ContactCategory" useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO contact_category (contact_id, category_id)
+		VALUES (#{contactId},
+		#{categoryId})
+	</insert>
+
+	<select id="getAllContacts" resultType="model.Contact">
+		SELECT
+		c.id AS id,
+		c.id AS
+		contactId,
+		c.created_on AS createdOn,
+		c.short_name AS shortName,
+		GROUP_CONCAT(DISTINCT cat.name) AS categories,
+		c.company_name AS
+		companyName,
+		c.status AS status,
+		GROUP_CONCAT(DISTINCT co.address_1) AS
+		addresses
+		FROM
+		contact c
+		JOIN
+		contact_category cc ON c.id = cc.contact_id
+		JOIN
+		category cat ON
+		cc.category_id = cat.id
+		LEFT JOIN
+		contact_office co
+		ON c.id =
+		co.contact_id
+		GROUP BY
+		c.id ORDER BY
+		c.id DESC;
+	</select>
+
+	<select id="getContactDetails" resultType="model.Contact">
+		SELECT
+		c.id AS id,
+		c.status AS status,
+		c.company_name AS companyName,
+		c.short_name AS
+		shortName,
+		c.created_by AS createdBy,
+		c.created_on AS createdOn,
+		c.updated_by AS updatedBy
+		FROM
+		contact c
+		WHERE
+		c.id = #{id}
+	</select>
+
+	<select id="getContactCategory"
+		resultType="model.ContactCategory">
+		SELECT
+		c.contact_id AS contactId,
+		c.category_id AS categoryId
+		FROM
+		contact_category c
+		WHERE
+		c.contact_id = #{id}
+	</select>
+
+	<select id="getCompanyContactOffice"
+		resultType="model.ContactOffice">
+		SELECT
+		c.id AS id,
+		c.contact_id AS contactId,
+		c.office_name AS
+		officeName,
+		c.address_1 AS address1,
+		c.address_2 AS address2,
+		c.town_city AS townCity,
+		c.postcode AS postcode,
+		c.country AS country,
+		c.telephone_1 AS telephone1,
+		c.telephone_2 AS telephone2,
+		c.fax AS fax,
+		c.mobile AS mobile,
+		c.email AS email,
+		c.url AS url,
+		c.status AS status
+		FROM
+		contact_office c
+		WHERE
+		c.contact_id = #{id}
+		ORDER BY
+		c.id DESC;
+	</select>
+
+	<select id="getContactOffice" resultType="model.ContactOffice">
+		SELECT
+		c.id AS id,
+		c.contact_id AS contactId,
+		c.office_name AS
+		officeName,
+		c.address_1 AS
+		address1,
+		c.address_2 AS address2,
+		c.town_city AS townCity,
+		c.postcode AS
+		postcode,
+		c.country AS country,
+		c.telephone_1 AS telephone1,
+		c.telephone_2 AS telephone2,
+		c.fax AS fax,
+		c.mobile AS mobile,
+		c.email AS
+		email,
+		c.url AS url,
+		c.status AS status
+		FROM
+		contact_office c
+		WHERE
+		c.id =
+		#{id}
+	</select>
+
+	<delete id="deleteOffice" parameterType="int">
+		DELETE FROM
+		contact_office
+		WHERE id = #{id}
+	</delete>
+
+	<update id="updateOffice" parameterType="model.ContactOffice">
+		UPDATE contact_office
+		SET office_name = #{officeName},
+		address_1 = #{address1},
+		address_2 =
+		#{address2},
+		town_city = #{townCity},
+		postcode = #{postcode},
+		country =
+		#{country},
+		telephone_1 = #{telephone1},
+		telephone_2 = #{telephone2},
+		fax = #{fax},
+		mobile = #{mobile},
+		email = #{email},
+		url = #{url},
+		status =
+		#{status}
+		WHERE id = #{id}
+	</update>
+
+	<update id="updateContact" parameterType="model.Contact">
+		UPDATE contact
+		SET
+		status = #{status},
+		company_name = #{companyName},
+		short_name =
+		#{shortName},
+		updated_by = #{updatedBy},
+		updated_on = #{updatedOn}
+		WHERE
+		id = #{id}
+	</update>
+
+	<delete id="deletecategory" parameterType="int">
+		DELETE FROM
+		contact_category
+		WHERE contact_category.contact_id = #{id}
+	</delete>
+
+	<delete id="deletecontact" parameterType="int">
+		DELETE FROM
+		contact
+		WHERE id = #{id}
+	</delete>
+
+
+	<select id="checkShortnameExist" resultType="int"
+		parameterType="model.Contact">
+		SELECT CASE
+		WHEN EXISTS (
+		SELECT 1
+		FROM contact
+		WHERE
+		short_name = #{shortName} AND id != #{id}
+		) THEN 1
+		ELSE 0
+		END AS
+		shortname_exists
+	</select>
+
+	<select id="getUsernameByContactId" resultType="String"
+		parameterType="model.User">
+		SELECT
+		u.username AS username
+		FROM user u
+		left JOIN contact
+		c ON c.created_by = u.id
+		where c.id = #{id};
+	</select>
+
+	<select id="checkUserNameExist" resultType="int"
+		parameterType="model.User">
+		SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END AS
+		userExists
+		FROM user
+		WHERE username = #{username};
+	</select>
+
+</mapper>

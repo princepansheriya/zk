@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk>
+	<window apply="controller.LoginController" sclass="row window"
+		style="border:none;margin: 12% 32% 0% 32%;">
+		<style src="style.css" />
+		<div sclass="row main" style=" margin: 0px 12px 0px 12px;">
+
+
+			<label id="errorBox" sclass="error-box" visible="false" />
+
+			<div sclass="main-part row" style="">
+
+				<div sclass="left-side col-lg-4 col-md-4" 
+					>
+					<div sclass="img">
+						<a>
+							<image src="logo.webp" style="width:120px" />
+						</a>
+					</div>
+
+
+				</div>
+				<div sclass="right-side col-lg-8 col-md-8" style="position: relative;">
+					<div sclass="login-label"
+						style=" padding: 52px 0px 25px 0px;text-align: center;">
+						<label
+							style="font-size: 20px;font-weight: bold;">
+							Login page!!
+						</label>
+					</div>
+
+
+					<div style="padding: 71px 0px 0px 41px;text-align: center;"
+						sclass="form-section">
+						<hlayout id="stage1" sclass="stage1-layout">
+							<textbox id="username" sclass="username"
+								placeholder="Enter your username" />
+							<button id="nextBtn"
+								onClick="@command('nextStage')" label="Next" sclass="login-btn" />
+						</hlayout>
+
+
+						<hlayout id="stage2" sclass="stage2-layout">
+							<textbox id="password" type="password"
+								sclass="password" placeholder="Enter your password" />
+							<button id="backBtn"
+								onClick="@command('backStage')" label="Back" sclass="login-btn" />
+							<button id="loginBtn"
+								onClick="@command('login')" label="Login" sclass="login-btn" />
+						</hlayout>
+					</div>
+
+				</div>
+
+			</div>
+
+
+		</div>
+
+	</window>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="script.js"></script>
+</zk>

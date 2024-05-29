@@ -1,0 +1,71 @@
+<zk>
+	<window apply="controller.LoginController">
+		<style src="menu.css" />
+		<div sclass="row head-row">
+			<div sclass="col-lg-6 col-md-6 head">
+				<div sclass="">
+					<a>
+						<image src="logo.webp" id="logo" style="width:102px" />
+					</a>
+				</div>
+			</div>
+			<div sclass="col-lg-6 col-md-6">
+				<div sclass="head-section1" style="padding-left: 681px;
+    padding-top: 20px;" >
+
+					<hlayout sclass="head-half">
+						<div sclass="name" style="padding-top: 5px;">
+							<label style="font-size: larger;
+    font-weight: bold;">
+								Hello ${sessionScope.loggedInUser}
+							</label>
+						</div>
+						<div sclass="logout" style=" padding-left: 25px;
+    font-size: 16px;">
+							<button label="Logout" id="logout" style="    padding: 8px 20px 8px 20px;
+    font-size: 16px;"/>
+						</div>
+					</hlayout>
+
+				</div>
+			</div>
+		</div>
+
+		<div sclass="row">
+			<div sclass="col-lg-2">
+				<menubar sclass="menui" orient="vertical"
+					autodrop="true">
+					<menuitem label="Dashboard" id="dashboard" />
+					<menu label="Contact">
+						<menupopup>
+							<menuitem label="Add Contact"
+								id="addContact" />
+							<menuitem label="List Contact"
+								id="listContact" />
+						</menupopup>
+					</menu>
+					<menu label="Sale">
+						<menupopup>
+							<menuitem label="New Sale"
+								id="newsale" />
+							<menuitem label="List Sale"
+								id="listsale" />
+							<menuitem label="Search Sale"
+								id="searchsale" />
+						</menupopup>
+					</menu>
+
+				</menubar>
+			</div>
+			<div sclass="col-lg-10" style="padding-right: 79px;padding-left:0;">
+				<include id="subPageInclude" src="dashboard.zul" />
+			</div>
+
+		</div>
+
+
+
+
+
+	</window>
+</zk>

@@ -1,0 +1,169 @@
+<?page title="New Page Title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="contactWindow" apply="controller.ContactController">
+		<style src="contact.css" />
+		<div sclass="row contact-page" >
+			<label sclass="admin-label">Admin:</label>
+			<div sclass="row admin-section">
+				<div sclass="row box">
+					<hlayout>
+						<label value="ID:" sclass="label"
+							style="padding-left: 18px;" />
+						<label id="idLabel" sclass="label-val"
+							style="padding-left: 125px;font-size: 14px;font-weight: 700;" />
+						<intbox id="contactIntId" value="0"
+							visible="false" sclass="label" />
+					</hlayout>
+				</div>
+				<div sclass="row box">
+					<hlayout>
+						<label value="Date Added:" sclass="label"
+							style="padding-left: 18px;" />
+						<label id="dateAddedLabel" value=""
+							sclass="label-val"
+							style="padding-left: 52px;font-size: 14px;font-weight: 700;" />
+					</hlayout>
+				</div>
+				<div sclass="row box">
+					<hlayout>
+						<label value="Added By:" sclass="label"
+							style="padding-left: 18px;" />
+						<label id="addedByLabel" value=""
+							sclass="label-val"
+							style="padding-left: 67px;font-size: 14px;font-weight: 700;" />
+					</hlayout>
+				</div>
+
+
+				<div sclass="row box">
+					<hlayout>
+						<label sclass="label" value="*Status:"
+							onBlur="@command('companyNameValid')" style="margin-top:40px;" />
+						<combobox id="statusCombobox"
+							style="margin-left:90px;" autodrop="true" readonly="true">
+							<comboitem label="Active" value="Active" />
+							<comboitem label="Inactive"
+								value="Inactive" />
+						</combobox>
+						<label id="statusError" style="color:red;"
+							visible="false" />
+					</hlayout>
+				</div>
+
+				<div sclass="row box">
+					<hlayout>
+						<label value="*Company Name:" sclass="label" />
+						<textbox id="companyNameTextbox" value=""
+							style="margin-left:18px;   padding: 0 32px 0 5px;"
+							onBlur="@command('companyNameValid')" />
+						<label id="companyNameError" style="color:red;"
+							visible="false" />
+					</hlayout>
+				</div>
+				<div sclass="row box">
+					<hlayout>
+						<label value="*Short Name:" sclass="label" />
+						<textbox id="shortNameTextbox" value=""
+							style="margin-left:48px; padding: 0 32px 0 5px;" />
+						<label id="shortNameError"
+							value="Short name already exists." style="color:red;"
+							visible="false" />
+
+					</hlayout>
+				</div>
+
+
+
+			</div>
+
+
+			<label sclass="categories">*Categories:</label>
+			<!-- Right side: Category grid -->
+			<div sclass="row categorie-section">
+				<grid id="categoriesGrid" width="410px"
+					style="border:none;" sclass="grid-section">
+					<template name="model">
+						<row style="border:none;">
+							<!-- Removed the label element for ID -->
+							<label value="${each.name}"
+								style="font-size: 16px;color: black;" sclass="cate-text" />
+							<checkbox value="${each}" style="margin:0;"
+								checked="${each.selected}" />
+						</row>
+					</template>
+				</grid>
+
+				<label id="categoriesError" style="color:red;"
+					visible="false" />
+			</div>
+
+
+			<!-- <label sclass="Office-label">Office:</label>
+				<div sclass="btn">
+				<button label="+" id="addOffice" sclass="newOffice" />
+				</div> -->
+
+			<div sclass="row">
+				<div sclass="col-lg-6 col-md-6">
+					<label sclass="Office-label">*Office:</label>
+				</div>
+				<div sclass="col-lg-6 col-md-6" style="padding-left: 650px;">
+					<button label="New office"  id="addOffice" />
+				
+				</div>
+			</div>
+
+			<div sclass="row office-section">
+				<div sclass="Office">
+					<grid id="officeGrid">
+						<columns>
+							<column label="ID" />
+							<column label="Office" />
+							<column label="Address" />
+							<column label="Status" />
+							<column label="Action" />
+						</columns>
+						<template name="model">
+							<row>
+								<label value="${each.id}"
+									tooltiptext="${each.id}" />
+								<label value="${each.officeName}"
+									tooltiptext="${each.officeName}" />
+								<label value="${each.address1}"
+									tooltiptext="${each.address1}" />
+								<label value="${each.status}"
+									tooltiptext="${each.status}" />
+								<hbox>
+									<button label="Edit"
+										forward="onUpdate(${each})" />
+									<button label="Delete"
+										forward="onDelete(${each})" />
+								</hbox>
+							</row>
+						</template>
+					</grid>
+				</div>
+			</div>
+			<popup id="mypopup">
+				<include id="officePageInclude" src="" />
+			</popup>
+			<button label="Save" sclass="savebtn" id="finalSubmit"
+				visible="false" />
+		</div>
+
+		<popup id="deleteOfficePooup"
+			style="margin: 20px;
+    padding: 20px;">
+			<div style="padding-bottom: 30px;">
+				<label
+					value="Are you sure you want to delete this office?"
+					style="font-size: 16px;" />
+			</div>
+			<hbox style="margin-left: 110px;">
+				<button id="deleteoffice" label="Yes" />
+				<button id="canceldeleteOffice" label="No" />
+			</hbox>
+		</popup>
+	</window>
+</zk>
+

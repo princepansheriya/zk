@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk>
+	<window apply="controller.LoginController">
+		<style src="style.css" />
+		<vlayout sclass="main" >
+			<hlayout id="stage1" sclass="stage1-layout">
+				<textbox id="username" placeholder="Username" />
+				<button id="nextBtn" onClick="@command('nextStage')"
+					label="Next" />
+			</hlayout>
+			<hlayout id="stage2" sclass="stage2-layout">
+				<textbox id="password" type="password"
+					placeholder="Password" />
+				<button id="backBtn" onClick="@command('backStage')"
+					label="Back" sclass="backBtn" />
+				<button id="loginBtn" onClick="@command('login')"
+					label="Login" />
+			</hlayout>
+		</vlayout>
+
+	</window>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="script.js"></script>
+</zk>

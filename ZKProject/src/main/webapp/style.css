@@ -1,0 +1,48 @@
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f0f4f9 ;
+}
+.stage2-layout {
+	display: none;
+}
+.error-box {
+    color: red;
+    border: 1px solid red;
+    background-color: #ffe6e6;
+    padding: 10px;
+    border-radius: 5px;
+    margin-left: 19%;
+    margin-top: -2px;
+    position: absolute;
+}
+.left-side{
+	border-right: 1px solid #1c1313;
+    padding: 78px 0px 88px 0px;
+    text-align: center;
+}
+@media (max-width: 998px) {
+	.left-side{
+	border-right: none;
+  
+}
+.error-box {
+	   margin-left: 9%;
+	}
+}
+	
+
+/* .login-btn {
+    padding: 10px 25px 10px 26px;
+        margin-top: 1px;
+}
+
+.username {
+    padding: 10px 120px 10px 10px;
+    font-size: 14px;
+}
+
+.password {
+	 padding: 10px 120px 10px 10px;
+    font-size: 14px;
+} */
+

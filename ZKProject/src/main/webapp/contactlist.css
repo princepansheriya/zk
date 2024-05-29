@@ -1,0 +1,16 @@
+.truncated {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	max-width: 250px; /* Adjust this value as needed */
+	display: inline-block; /* Ensure the element respects the max-width */
+}
+
+/* .z-label {
+	font-size: medium;
+} */
+.z-column-content {
+    font-weight: bold;
+    padding: 4px 5px 3px;
+    font-size: 16px;
+}

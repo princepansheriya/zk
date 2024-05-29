@@ -1,0 +1,14 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window >
+
+<div sclass="row" style="margin: 50px;" >
+<div sclass="row">
+  <label style="margin: 50px;font-size: larger;font-weight: 900;padding: 0 0 0 458px;
+">New sale page!!!</label>
+</div>
+
+</div>
+
+</window>
+</zk>

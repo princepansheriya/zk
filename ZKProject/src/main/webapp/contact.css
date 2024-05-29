@@ -1,0 +1,75 @@
+@charset "ISO-8859-1";
+
+.label {
+	color: black;
+	font-size: 16px;
+}
+
+.admin-section {
+	border: 2px solid black;
+	margin: 0 20px 20px 20px;
+	padding: 30px;
+}
+
+
+.box {
+	padding-bottom: 13px;
+}
+
+.admin-label {
+	font-size: 16px !important; /* Change the font size as desired */ 
+	color: #d3870f; /* Change the color as desired */
+	font-weight: bold;
+	padding-left: 57px;
+	color: #d3870f
+}
+
+.categorie-section {
+    border: 2px solid black;
+    margin: 9px 20px 20px 20px;
+    padding: 20px 28px;
+}
+
+.z-grid-odd>.z-row-inner, .z-grid-odd>.z-cell {
+	background: none;
+}
+
+.categories {
+	font-size: 16px !important; /* Change the font size as desired */
+	color: #d3870f; /* Change the color as desired */
+	font-weight: bold;
+	padding-left: 46px;
+}
+.contact-page {
+    padding: 25px 0 0 0;
+
+}
+.office-section {
+	border: 2px solid black;
+	margin: 6px 20px;
+	padding: 20px 0;
+}
+
+.Office {
+	margin: 0px 18px 0px 18px;
+}
+
+.Office-label {
+	font-size: 16px !important; /* Change the font size as desired */
+	color: #d3870f; /* Change the color as desired */
+	font-weight: bold;
+	padding-left: 46px;
+}
+
+/* .addoffice {
+	background-color: #134550ab !important;
+	padding: 5px 10px !important;
+	cursor: pointer !important;
+	margin-left: 1380px !important;
+	border-radius: 50% !important;
+} */
+
+.savebtn {
+	margin: 19px 1px 0px 709px;
+	padding: 7px 20px 10px 20px;
+}

@@ -1,0 +1,46 @@
+<zk>
+	<window id="loginWindow" apply="controller.ContactController"
+		style="border: none;">
+		<style src="contactlist.css" />
+		<grid id="contactGrid">
+			<columns >
+				<column label="ID" />
+				<column label="Categories" />
+				<column label="Company Name" />
+				<column label="Addresses" />
+				<column label="Status" />
+				<column label="Action" />
+			</columns>
+			<template name="model">
+				<row>
+					<label value="${each.id}" tooltiptext="${each.id}"/>
+					<label sclass="truncated" value="${each.categories}"
+						tooltiptext="${each.categories}" />
+					<label value="${each.companyName}"  tooltiptext="${each.companyName}"/>
+					<label value="${each.addresses}"  tooltiptext="${each.addresses}"/>
+					<label value="${each.status}"  tooltiptext="${each.status}"/>
+					<hbox>
+						<button label="Edit"
+							forward="onClick=onEditButtonClick" />
+						<button label="Delete" forward="onClick=onDeleteButtonClick" if="${each.id == 74}" />
+
+						<!-- 	<button id="editContact_${each.id}"
+							label="Edit" /> -->
+					</hbox>
+				</row>
+			</template>
+		</grid>
+		
+		<popup id="mpopup" style="margin: 20px;
+    padding: 20px;">
+		<div style="padding-bottom: 30px;">
+			<label
+				value="Are you sure you want to delete this company?" style="font-size: 16px;"/>
+</div>
+			<hbox style="margin-left: 110px;">
+				<button id="confirmDelete" label="Yes" />
+				<button id="cancelDelete" label="No" />
+			</hbox>
+		</popup>
+	</window>
+</zk>
