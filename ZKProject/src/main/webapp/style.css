@@ -1,10 +1,28 @@
 body {
-	font-family: Arial, sans-serif;
-	background-color: #f0f4f9 ;
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f9;
 }
+
+/* Define transition for smooth sliding effect */
+.stage1-layout, .stage2-layout {
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Hide stage2 initially */
 .stage2-layout {
-	display: none;
+    transform: translateX(100%);
+
 }
+
+/* Show stage2 when needed */
+.show-stage2 .stage1-layout {
+    transform: translateX(-160%);
+}
+
+.show-stage2 .stage2-layout {
+    transform: translateX(0);
+}
+
 .error-box {
     color: red;
     border: 1px solid red;

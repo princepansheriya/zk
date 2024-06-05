@@ -30,30 +30,32 @@
 					</div>
 
 
-					<div style="padding: 71px 0px 0px 41px;text-align: center;"
+					<div style="padding: 41px 0px 0px 41px;text-align: center;"
 						sclass="form-section">
+						
+					
 						<hlayout id="stage1" sclass="stage1-layout">
-							<textbox id="username" sclass="username"
+							<textbox id="username" sclass="username" 
 								placeholder="Enter your username" />
 							<button id="nextBtn"
-								onClick="@command('nextStage')" label="Next" sclass="login-btn" />
+								onClick="@command('nextStage')" label="Next" sclass="login-btn" tooltiptext="Next"/>
 						</hlayout>
 
 
 						<hlayout id="stage2" sclass="stage2-layout">
-							<textbox id="password" type="password"
+							<textbox id="password" type="password" 
 								sclass="password" placeholder="Enter your password" />
 							<button id="backBtn"
-								onClick="@command('backStage')" label="Back" sclass="login-btn" />
+								onClick="@command('backStage')" label="Back" sclass="login-btn" tooltiptext="Back"/>
 							<button id="loginBtn"
-								onClick="@command('login')" label="Login" sclass="login-btn" />
-						</hlayout>
+								onClick="@command('login')" label="Login" sclass="login-btn" tooltiptext="Login"/>
+					
+					</hlayout>
+				
 					</div>
 
 				</div>
-
 			</div>
-
 
 		</div>
 

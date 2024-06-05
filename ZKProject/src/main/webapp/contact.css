@@ -7,10 +7,9 @@
 
 .admin-section {
 	border: 2px solid black;
-	margin: 0 20px 20px 20px;
+	margin: 6px 20px 20px 20px;
 	padding: 30px;
 }
-
 
 .box {
 	padding-bottom: 13px;
@@ -20,8 +19,7 @@
 	font-size: 16px !important; /* Change the font size as desired */ 
 	color: #d3870f; /* Change the color as desired */
 	font-weight: bold;
-	padding-left: 57px;
-	color: #d3870f
+	padding-left: 56px;
 }
 
 .categorie-section {
@@ -60,14 +58,6 @@
 	font-weight: bold;
 	padding-left: 46px;
 }
-
-/* .addoffice {
-	background-color: #134550ab !important;
-	padding: 5px 10px !important;
-	cursor: pointer !important;
-	margin-left: 1380px !important;
-	border-radius: 50% !important;
-} */
 
 .savebtn {
 	margin: 19px 1px 0px 709px;

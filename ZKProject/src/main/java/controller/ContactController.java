@@ -23,6 +23,7 @@ import org.zkoss.zul.Include;
 import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Paging;
 import org.zkoss.zul.Popup;
 import org.zkoss.zul.Row;
 import org.zkoss.zul.Rows;
@@ -37,7 +38,7 @@ import model.ContactOffice;
 
 public class ContactController extends SelectorComposer<Component> {
 
-	private static final long serialVersionUID = 1L;  
+	private static final long serialVersionUID = 1L;
 
 	@Wire
 	private Label idLabel;
@@ -77,14 +78,19 @@ public class ContactController extends SelectorComposer<Component> {
 	Contact contact;
 	@Wire
 	private Include officePageInclude;
+	
+	@Wire
+	Paging paging;
 	@Wire
 	private Grid contactGrid;
 	Include subPageInclude;
 	Execution executions = Executions.getCurrent();
 	public static int contactId;
 	public static ContactOffice contactOffices;
-
+	
 	OfficeController officeController;
+	int currentPage = 0;
+	int pageSize = 2;
 
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
@@ -130,6 +136,32 @@ public class ContactController extends SelectorComposer<Component> {
 		}
 	}
 
+	private void loadContactsData() {
+		List<Contact> contacts = contactDao.getAllContacts();
+		int startIndex = currentPage * pageSize;
+		int endIndex = Math.min(startIndex + pageSize, contacts.size());
+		List<Contact> contacts1 = contacts.subList(startIndex, endIndex);	
+		if (contactGrid != null) {
+			contactGrid.setModel(new ListModelList<>(contacts1));
+			updatePagingInfo();
+		} else {
+			System.err.println("contactGrid is not properly initialized");
+		}
+	}
+
+	private void updatePagingInfo() {
+		int totalSize = contactDao.getAllContacts().size();
+		paging.setTotalSize(totalSize);
+		paging.setPageSize(pageSize);
+		paging.setActivePage(currentPage);
+	}
+	
+	@Listen("onPaging = #paging")
+	public void onPaging() {
+		currentPage = paging.getActivePage();
+		loadContactsData();
+	}
+	
 	@Listen("onClick = #officeForm")
 	public void officeForm() {
 		officePageInclude.setSrc("office.zul");
@@ -137,12 +169,17 @@ public class ContactController extends SelectorComposer<Component> {
 
 	@Listen("onBlur = #shortNameTextbox")
 	public void validShortName() {
+		String shortName = shortNameTextbox.getValue();
+	    String regex = "^[A-Z]+$";
 		Contact contact = new Contact();
 		contact.setId(contactIntId.getValue());
 		contact.setShortName(shortNameTextbox.getValue());
 		int result = contactDao.checkShortnameExist(contact);
+		
 		if (!shortNameTextbox.getValue().isBlank() && !shortNameTextbox.getValue().isEmpty() && result > 0) {
+			shortNameError.setValue("Short name already exists.");
 			shortNameError.setVisible(true);
+		
 		} else {
 			shortNameError.setVisible(false);
 		}
@@ -397,14 +434,7 @@ public class ContactController extends SelectorComposer<Component> {
 		}
 	}
 
-	private void loadContactsData() {
-		List<Contact> contacts = contactDao.getAllContacts();
-		if (contactGrid != null) {
-			contactGrid.setModel(new ListModelList<>(contacts));
-		} else {
-			System.err.println("contactGrid is not properly initialized");
-		}
-	}
+
 
 	@Listen("onClick = #finalSubmit")
 	public void saveContact() {

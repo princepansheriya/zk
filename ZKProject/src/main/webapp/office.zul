@@ -24,7 +24,7 @@
 					<hlayout sclass="col-lg-6">
 						<label value="*Office Name:" sclass="label"
 							style="padding-right: 11px;" />
-						<textbox id="officeNameTextbox" />
+						<textbox id="officeNameTextbox" style="padding-right: 28px;"/>
 					</hlayout>
 					<label value="" id="officeNameError" visible="false"
 						style="color: red;position: absolute;left: 147px;top: 24px;font-size: 14px;" />
@@ -32,22 +32,22 @@
 
 					<hlayout sclass="col-lg-6">
 						<label value="Address 1:" sclass="label"
-							style="padding-right: 25px;padding-left: 14px;" />
-						<textbox id="address1Textbox" />
+							style="padding-right: 24px;padding-left: 14px;" />
+						<textbox id="address1Textbox" style="padding-right: 28px;" />
 					</hlayout>
 				</div>
 
 				<div sclass="row" style="padding: 10px 0;">
-					<hlayout sclass="col-lg-6">
+					<hlayout sclass="col-lg-6" >
 						<label value="Address 2:" sclass="label"
 							style="padding-right: 26px; padding-left: 17px;" />
-						<textbox id="address2Textbox" />
+						<textbox id="address2Textbox" style="padding-right: 28px;"/>
 					</hlayout>
 
 					<hlayout sclass="col-lg-6">
 						<label value="Town/City:" sclass="label"
 							style="padding-right: 26px;padding-left: 14px;" />
-						<textbox id="townCityTextbox" />
+						<textbox id="townCityTextbox" style="padding-right: 28px;"/>
 					</hlayout>
 
 				</div>
@@ -56,13 +56,13 @@
 					<hlayout sclass="col-lg-6">
 						<label value="Postcode:" sclass="label"
 							style="padding-right: 33px;    padding-left: 16px;" />
-						<textbox id="postcodeTextbox" />
+						<textbox id="postcodeTextbox" style="padding-right: 28px;"/>
 					</hlayout>
 
 					<hlayout sclass="col-lg-6">
 						<label value="Country:" sclass="label"
 							style="padding-right: 40px;padding-left: 14px;" />
-						<textbox id="countryTextbox" />
+						<textbox id="countryTextbox" style="padding-right: 28px;"/>
 					</hlayout>
 
 				</div>
@@ -71,12 +71,12 @@
 					<hlayout sclass="col-lg-6">
 						<label value="Telephone 1:" sclass="label"
 							style="padding-left: 16px;padding-right: 12px;" />
-						<textbox id="telephone1Textbox" />
+						<textbox id="telephone1Textbox" style="padding-right: 28px;"/>
 					</hlayout>
 
 					<hlayout sclass="col-lg-6">
 						<label value="Telephone 2:" sclass="label" style="padding-left: 14px;"/>
-						<textbox id="telephone2Textbox" />
+						<textbox id="telephone2Textbox" style="padding-right: 28px;"/>
 					</hlayout>
 
 				</div>
@@ -86,16 +86,16 @@
 					<hlayout sclass="col-lg-6">
 						<label value="Fax:" sclass="label"
 							style="padding-right: 77px;padding-left: 16px;" />
-						<textbox id="faxTextbox" />
+						<textbox id="faxTextbox" style="padding-right: 28px;"/>
 					</hlayout>
 
 					<hlayout sclass="col-lg-6">
 						<label value="*Mobile:" sclass="label"
-							style="padding-right: 48px;" />
-						<textbox id="mobileTextbox" />
+							style="padding-right: 49px;" />
+						<textbox id="mobileTextbox"  maxlength="10" instant="true" style="padding-right: 28px;"/>
 					</hlayout>
 					<label value="" id="mobileError" visible="false"
-						style="color: red;position: absolute;left: 457px;top: 35px;font-size: 14px;" />
+						style="color: red;position: absolute;left: 486px;top: 35px;font-size: 14px;" />
 				</div>
 
 				<div sclass="row"
@@ -103,7 +103,7 @@
 					<hlayout sclass="col-lg-6">
 						<label value="*Email:" sclass="label"
 							style="padding-right: 62px;" />
-						<textbox id="emailTextbox" />
+						<textbox id="emailTextbox" style="padding-right: 28px;"/>
 
 					</hlayout>
 					<label value="" id="emailError" visible="false"
@@ -111,18 +111,19 @@
 					<hlayout sclass="col-lg-6"
 						style="position: relative;">
 						<label value="URL:" sclass="label"
-							style="padding-right: 65px;padding-left: 16px;" />
-						<textbox id="urlTextbox" />
-
+							style="padding-right: 68px;padding-left: 16px;" />
+						<textbox id="urlTextbox" style="padding-right: 28px;"/>
+						
 					</hlayout>
-
+<label value="" id="urlError" visible="false"
+						style="color: red;  position: absolute;left: 486px;top: 34px;font-size: 14px;" />
 				</div>
 
 
 				<div sclass="row" style="padding: 10px 0;">
 					<hlayout sclass="col-lg-6">
 						<label value="Status:"
-							style="margin-top:40px;padding-left: 16px;padding-right: 38px;"
+							style="margin-top:40px;padding-left: 16px;padding-right: 56px;"
 							sclass="label" />
 						<combobox id="statusCombobox"
 							 autodrop="true" readonly="true">

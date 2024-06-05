@@ -30,97 +30,67 @@ public class LoginController extends SelectorComposer<Component> {
 
 	ContactDao contactDao = new ContactDaoimpl();
 
-	@Wire
-	private Include subPageIncludes;
-
 	@Wire("#username")
 	private Textbox usernameBox;
 
 	@Wire("#password")
 	private Textbox passwordBox;
-	
+
 	@Wire
 	private Label errorBox;
 
 	Execution executions = Executions.getCurrent();
 
+	@Override
+	public void doAfterCompose(Component comp) throws Exception {
+		super.doAfterCompose(comp);
+		Session session = Sessions.getCurrent();
+		session.setAttribute("subPageInclude", subPageInclude);
+	}
+
 	@Listen("onClick = #nextBtn")
 	public void nextStage() {
-		
-		User user=new User();
+
+		User user = new User();
 		user.setUsername(usernameBox.getValue());
-		int exist=contactDao.checkUserNameExist(user);
-		
+		int exist = contactDao.checkUserNameExist(user);
+
 		errorBox.setVisible(false);
-		if(usernameBox.getValue().isEmpty()&&usernameBox.getValue().isBlank() ) {
+		if (usernameBox.getValue().isEmpty() && usernameBox.getValue().isBlank()) {
 			errorBox.setValue("UserName is required.");
 			errorBox.setVisible(true);
 			return;
-		}else if(exist==0) {
+		} else if (exist == 0) {
 			errorBox.setValue("This username does not exist.");
 			errorBox.setVisible(true);
 			return;
 		}
 		Clients.evalJavaScript("showStage2();");
-		
 	}
 
 	@Listen("onClick = #backBtn")
-	public void backStage() {		
+	public void backStage() {
 		Clients.evalJavaScript("backStage();");
 	}
-
-	@Listen("onClick = #logo")
-	public void logoClick() {		
-		Executions.sendRedirect("menu.zul");
+	
+	@Listen("onOK = #username")
+	public void enterUsername() {
+		nextStage();
 	}
 	
-	@Listen("onClick = #addContact")
-	public void showContactPage() {
-		subPageInclude.setSrc("");
-		subPageInclude.setDynamicProperty("subPageInclude", subPageInclude);
-		subPageInclude.setSrc("contact.zul");
+	@Listen("onOK = #password")
+	public void enterPassword() {
+		login();
 	}
 
-
-	@Listen("onClick = #dashboard")
-	public void dashboardCall() {
-		subPageInclude.setSrc("dashboard.zul");
-	}
-	
-	@Listen("onClick = #newsale")
-	public void newsaleCall() {
-		subPageInclude.setSrc("newsale.zul");
-	}
-	
-	@Listen("onClick = #searchsale")
-	public void searchsaleCall() {
-		subPageInclude.setSrc("searchsale.zul");
-	}
-	
-	@Listen("onClick = #listsale")
-	public void listsaleCall() {
-		subPageInclude.setSrc("listsale.zul");
-	}
-	
-	@Listen("onClick = #listContact")
-	public void showContactListPage() {
-		subPageInclude.setDynamicProperty("subPageInclude", subPageInclude);
-		subPageInclude.setSrc("contactlist.zul");
-	}
-	
-	@Listen("onClick = #logout")
-	public void logout() {
-		Executions.sendRedirect("index.zul");
-	}
 
 	@Listen("onClick = #loginBtn")
 	public void login() {
 		String username = usernameBox.getValue();
 		String password = passwordBox.getValue();
 		errorBox.setVisible(false);
-		
-		if(passwordBox.getValue().isEmpty()) {
+
+		if (passwordBox.getValue().isEmpty()) {
 			errorBox.setValue("Password is required.");
 			errorBox.setVisible(true);
 			return;

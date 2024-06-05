@@ -72,6 +72,8 @@ public class OfficeController extends SelectorComposer<Component> {
 	@Wire
 	private Label officeNameError;
 	@Wire
+	private Label urlError;
+	@Wire
 	private Textbox urlTextbox;
 	private Popup mypopup;
 	ContactController contactController;
@@ -94,7 +96,7 @@ public class OfficeController extends SelectorComposer<Component> {
 		contactController = (ContactController) executions.getArg().get("contactController");
 		ContactOffice contactOffice = (ContactOffice) session.getAttribute("contactOffices");
 		if (contactOffice != null) {
-			officeLabel.setValue("Edit "+ contactOffice.getOfficeName()+" office:");
+			officeLabel.setValue("Edit " + contactOffice.getOfficeName() + " office:");
 			officeIntId.setValue(contactOffice.getId());
 			tempIntId.setValue(contactOffice.getTempId());
 			officeNameTextbox.setValue(contactOffice.getOfficeName());
@@ -120,10 +122,34 @@ public class OfficeController extends SelectorComposer<Component> {
 		isValid();
 	}
 
+	@Listen("onChange = #mobileTextbox")
+	public void validMobileNumber(Event event) {
+		Textbox mobileTextbox = (Textbox) event.getTarget();
+		String inputValue = mobileTextbox.getValue().trim();
+		// Remove any non-digit characters
+		String cleanedInput = inputValue.replaceAll("\\D", "");
+		if (cleanedInput.length() > 10) {
+			cleanedInput = cleanedInput.substring(0, 10);
+		}
+		mobileTextbox.setValue(cleanedInput);
+	}
+
 	@Listen("onClick = #canselOffice")
 	public void canselOffice() {
 		mypopup.close();
 		clearFields();
+	}
+
+	@Listen("onBlur = #urlTextbox")
+	public void urlError() {
+		String url = urlTextbox.getValue();
+
+		urlError.setVisible(false);
+		if (!isValidUrl(url)) {
+			urlError.setVisible(true);
+			urlError.setValue("Enter valid url.");
+		}
+		isValid();
 	}
 
 	@Listen("onBlur = #emailTextbox")
@@ -177,8 +203,9 @@ public class OfficeController extends SelectorComposer<Component> {
 		boolean mobile = isValidMobile(mobileTextbox.getValue());
 		boolean email = isValidEmail(emailTextbox.getValue());
 		boolean officeName = isValidOfficeName(officeNameTextbox.getValue());
-
-		if (mobile && email && officeName) {
+        boolean url =isValidUrl(urlTextbox.getValue());
+        
+		if (mobile && email && officeName&& url) {
 			submit.setVisible(true);
 			return true;
 		}
@@ -186,6 +213,20 @@ public class OfficeController extends SelectorComposer<Component> {
 		return false;
 	}
 
+	private boolean isValidUrl(String url) {
+		String urlRegex = "^(https?|ftp)://[a-zA-Z0-9+&@#/%?=~_|!:,.;]*[a-zA-Z0-9+&@#/%=~_|]$";
+		Pattern pattern = Pattern.compile(urlRegex);
+		Matcher matcher = pattern.matcher(url);
+		if (!url.isEmpty()) {
+			if (!matcher.matches()) {
+				submit.setVisible(false);
+				return false;
+			}
+			
+		}
+		return true;
+	}
+	
 	private boolean isValidOfficeName(String officeName) {
 
 		if (officeName.isEmpty() || officeName.isBlank()) {

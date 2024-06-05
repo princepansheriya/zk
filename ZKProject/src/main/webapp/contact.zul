@@ -63,10 +63,10 @@
 				<div sclass="row box">
 					<hlayout>
 						<label value="*Short Name:" sclass="label" />
-						<textbox id="shortNameTextbox" value=""
+						<textbox id="shortNameTextbox" value="" maxlength="3"
 							style="margin-left:48px; padding: 0 32px 0 5px;" />
 						<label id="shortNameError"
-							value="Short name already exists." style="color:red;"
+							 style="color:red;"
 							visible="false" />
 
 					</hlayout>
@@ -108,7 +108,7 @@
 					<label sclass="Office-label">*Office:</label>
 				</div>
 				<div sclass="col-lg-6 col-md-6" style="padding-left: 650px;">
-					<button label="New office"  id="addOffice" />
+					<button label="New office"  id="addOffice" tooltiptext="New office"/>
 				
 				</div>
 			</div>
@@ -135,9 +135,9 @@
 									tooltiptext="${each.status}" />
 								<hbox>
 									<button label="Edit"
-										forward="onUpdate(${each})" />
+										forward="onUpdate(${each})" tooltiptext="Edit"/>
 									<button label="Delete"
-										forward="onDelete(${each})" />
+										forward="onDelete(${each})" tooltiptext="Delete"/>
 								</hbox>
 							</row>
 						</template>

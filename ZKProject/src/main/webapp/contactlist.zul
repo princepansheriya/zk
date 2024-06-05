@@ -19,10 +19,11 @@
 					<label value="${each.companyName}"  tooltiptext="${each.companyName}"/>
 					<label value="${each.addresses}"  tooltiptext="${each.addresses}"/>
 					<label value="${each.status}"  tooltiptext="${each.status}"/>
+					
 					<hbox>
 						<button label="Edit"
-							forward="onClick=onEditButtonClick" />
-						<button label="Delete" forward="onClick=onDeleteButtonClick" if="${each.id == 74}" />
+							forward="onClick=onEditButtonClick" tooltiptext="Edit"/>
+						<button label="Delete" forward="onClick=onDeleteButtonClick" tooltiptext="Delete" if="${each.createdBy == sessionScope.loggedUserId}" />
 
 						<!-- 	<button id="editContact_${each.id}"
 							label="Edit" /> -->
@@ -30,7 +31,7 @@
 				</row>
 			</template>
 		</grid>
-		
+		 <paging id="paging" />
 		<popup id="mpopup" style="margin: 20px;
     padding: 20px;">
 		<div style="padding-bottom: 30px;">

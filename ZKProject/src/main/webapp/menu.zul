@@ -1,5 +1,5 @@
 <zk>
-	<window apply="controller.LoginController">
+	<window apply="controller.MenuController">
 		<style src="menu.css" />
 		<div sclass="row head-row">
 			<div sclass="col-lg-6 col-md-6 head">
@@ -22,7 +22,7 @@
 						</div>
 						<div sclass="logout" style=" padding-left: 25px;
     font-size: 16px;">
-							<button label="Logout" id="logout" style="    padding: 8px 20px 8px 20px;
+							<button label="Logout" id="logout" tooltiptext="Logout"  style="padding: 8px 20px 8px 20px;
     font-size: 16px;"/>
 						</div>
 					</hlayout>
