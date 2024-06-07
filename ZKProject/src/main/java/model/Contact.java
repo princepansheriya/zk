@@ -1,11 +1,9 @@
 package model;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Contact {
+	
 	private int id;
 	private String status;
 	private String companyName;
@@ -16,6 +14,7 @@ public class Contact {
 	private Timestamp updatedOn;
 	private String addresses; // List of addresses
 	private String categories;
+	
 	// Constructors
 	public Contact() {
 		// Default constructor
@@ -108,4 +107,5 @@ public class Contact {
 	public void setCategories(String categories) {
 		this.categories = categories;
 	}
+	
 }

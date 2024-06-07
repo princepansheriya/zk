@@ -12,7 +12,6 @@ import org.zkoss.zul.Include;
 public class MenuController extends SelectorComposer<Component> {
 
 	private static final long serialVersionUID = 1L;
-
 	@Wire
 	private Include subPageInclude;
 
@@ -26,7 +25,6 @@ public class MenuController extends SelectorComposer<Component> {
 			return;
 		}
 		subPageInclude = (Include) session.getAttribute("subPageInclude");
-
 	}
 
 	@Listen("onClick = #logo")

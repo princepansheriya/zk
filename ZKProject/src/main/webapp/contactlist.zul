@@ -1,9 +1,11 @@
 <zk>
 	<window id="loginWindow" apply="controller.ContactController"
-		style="border: none;">
+		style="border: none;">		
 		<style src="contactlist.css" />
+		
 		<grid id="contactGrid">
-			<columns >
+		
+			<columns>
 				<column label="ID" />
 				<column label="Categories" />
 				<column label="Company Name" />
@@ -13,35 +15,57 @@
 			</columns>
 			<template name="model">
 				<row>
-					<label value="${each.id}" tooltiptext="${each.id}"/>
+					<label value="${each.id}" tooltiptext="${each.id}" />
 					<label sclass="truncated" value="${each.categories}"
 						tooltiptext="${each.categories}" />
-					<label value="${each.companyName}"  tooltiptext="${each.companyName}"/>
-					<label value="${each.addresses}"  tooltiptext="${each.addresses}"/>
-					<label value="${each.status}"  tooltiptext="${each.status}"/>
-					
+					<label value="${each.companyName}"
+						tooltiptext="${each.companyName}" sclass="truncated"/>
+					<label value="${each.addresses}" sclass="truncated"
+						tooltiptext="${each.addresses}" />
+					<label value="${each.status}"
+						tooltiptext="${each.status}" />
+
 					<hbox>
 						<button label="Edit"
-							forward="onClick=onEditButtonClick" tooltiptext="Edit"/>
-						<button label="Delete" forward="onClick=onDeleteButtonClick" tooltiptext="Delete" if="${each.createdBy == sessionScope.loggedUserId}" />
-
-						<!-- 	<button id="editContact_${each.id}"
-							label="Edit" /> -->
+							forward="onClick=onEditButtonClick" tooltiptext="Edit" />
+						<button label="Delete"
+							forward="onClick=onDeleteButtonClick" tooltiptext="Delete"
+							if="${each.createdBy == sessionScope.loggedUserId}" />
 					</hbox>
 				</row>
 			</template>
+			
 		</grid>
-		 <paging id="paging" />
-		<popup id="mpopup" style="margin: 20px;
-    padding: 20px;">
-		<div style="padding-bottom: 30px;">
-			<label
-				value="Are you sure you want to delete this company?" style="font-size: 16px;"/>
-</div>
+		
+		<div sclass="pagination-section" style="position:relative;">
+		
+			<paging id="paging" />
+			<hbox style="position: absolute;top: 4px;right: 9px;">
+				<label value="Page size:" />
+				<combobox id="pageSizeCombobox" readonly="true">
+					<comboitem label="10" value="10" />
+					<comboitem label="20" value="20" />
+					<comboitem label="30" value="30" />
+					<comboitem label="40" value="40" />
+					<comboitem label="50" value="50" />
+				</combobox>
+			</hbox>
+
+		</div>
+		
+		<popup id="mpopup" style="margin: 20px; padding: 20px;">
+		
+			<div style="padding-bottom: 30px;">
+				<label
+					value="Are you sure you want to delete this company?"
+					style="font-size: 16px;" />
+			</div>
 			<hbox style="margin-left: 110px;">
 				<button id="confirmDelete" label="Yes" />
 				<button id="cancelDelete" label="No" />
 			</hbox>
+			
 		</popup>
+				
 	</window>
 </zk>

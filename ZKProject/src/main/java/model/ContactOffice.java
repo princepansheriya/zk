@@ -1,6 +1,7 @@
 package model;
 
 public class ContactOffice {
+	
 	private int id;
 	private int tempId;
 	private int contactId;
@@ -13,7 +14,7 @@ public class ContactOffice {
 	private String telephone1;
 	private String telephone2;
 	private String fax;
-	private String mobile;
+	private Double mobile;
 	private String email;
 	private String url;
 	private String status;
@@ -23,7 +24,7 @@ public class ContactOffice {
 	}
 
 	public ContactOffice(int id,int tempId, int contactId, String officeName, String address1, String address2, String townCity,
-			String postcode, String country, String telephone1, String telephone2, String fax, String mobile,
+			String postcode, String country, String telephone1, String telephone2, String fax, Double mobile,
 			String email, String url, String status) {
 		this.id = id;
 		this.tempId=tempId;
@@ -140,11 +141,11 @@ public class ContactOffice {
 		this.fax = fax;
 	}
 
-	public String getMobile() {
+	public Double getMobile() {
 		return mobile;
 	}
 
-	public void setMobile(String mobile) {
+	public void setMobile(Double mobile) {
 		this.mobile = mobile;
 	}
 
@@ -171,4 +172,5 @@ public class ContactOffice {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
 }

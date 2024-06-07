@@ -16,6 +16,7 @@ import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Doublebox;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Label;
@@ -29,10 +30,8 @@ import model.ContactOffice;
 public class OfficeController extends SelectorComposer<Component> {
 
 	private static final long serialVersionUID = 1L;
-
 	ContactDao contactDao = new ContactDaoimpl();
-	public static List<ContactOffice> temporaryOfficeList = new ArrayList<>(); // ArrayList to hold temporary
-	// ContactOffice objects
+	public static List<ContactOffice> temporaryOfficeList = new ArrayList<>();
 	@Wire
 	private Button submit;
 	@Wire
@@ -60,7 +59,7 @@ public class OfficeController extends SelectorComposer<Component> {
 	@Wire
 	private Textbox faxTextbox;
 	@Wire
-	private Textbox mobileTextbox;
+	private Doublebox mobileDoubleBox;
 	@Wire
 	private Textbox emailTextbox;
 	@Wire
@@ -77,7 +76,6 @@ public class OfficeController extends SelectorComposer<Component> {
 	private Textbox urlTextbox;
 	private Popup mypopup;
 	ContactController contactController;
-
 	ContactController contactControllers;
 	@Wire
 	private Grid officeGrid;
@@ -89,7 +87,6 @@ public class OfficeController extends SelectorComposer<Component> {
 		officeLabel.setValue("New office:");
 		Session session = Sessions.getCurrent();
 		mypopup = (Popup) session.getAttribute("mypopup");
-
 		Execution execution = Executions.getCurrent();
 		execution.setAttribute("officeController", this);
 		statusCombobox.setSelectedIndex(0);
@@ -108,30 +105,16 @@ public class OfficeController extends SelectorComposer<Component> {
 			telephone1Textbox.setValue(contactOffice.getTelephone1());
 			telephone2Textbox.setValue(contactOffice.getTelephone2());
 			faxTextbox.setValue(contactOffice.getFax());
-			mobileTextbox.setValue(contactOffice.getMobile());
+			mobileDoubleBox.setValue(contactOffice.getMobile());
 			emailTextbox.setValue(contactOffice.getEmail());
 			urlTextbox.setValue(contactOffice.getUrl());
 			statusCombobox.setValue(contactOffice.getStatus());
-		} else {
-			System.out.println("No contact office data found.");
 		}
 	}
 
-	@Listen("onBlur = #address1Textbox,#address2Textbox,#statusCombobox,#townCityTextbox,#postcodeTextbox,#countryTextbox,#telephone1Textbox,#telephone2Textbox,#faxTextbox")
+	@Listen("onChange = #address1Textbox,#address2Textbox,#statusCombobox,#townCityTextbox,#postcodeTextbox,#countryTextbox,#telephone1Textbox,#telephone2Textbox,#faxTextbox")
 	public void validOffice() {
 		isValid();
-	}
-
-	@Listen("onChange = #mobileTextbox")
-	public void validMobileNumber(Event event) {
-		Textbox mobileTextbox = (Textbox) event.getTarget();
-		String inputValue = mobileTextbox.getValue().trim();
-		// Remove any non-digit characters
-		String cleanedInput = inputValue.replaceAll("\\D", "");
-		if (cleanedInput.length() > 10) {
-			cleanedInput = cleanedInput.substring(0, 10);
-		}
-		mobileTextbox.setValue(cleanedInput);
 	}
 
 	@Listen("onClick = #canselOffice")
@@ -140,10 +123,9 @@ public class OfficeController extends SelectorComposer<Component> {
 		clearFields();
 	}
 
-	@Listen("onBlur = #urlTextbox")
+	@Listen("onChange = #urlTextbox")
 	public void urlError() {
 		String url = urlTextbox.getValue();
-
 		urlError.setVisible(false);
 		if (!isValidUrl(url)) {
 			urlError.setVisible(true);
@@ -152,28 +134,24 @@ public class OfficeController extends SelectorComposer<Component> {
 		isValid();
 	}
 
-	@Listen("onBlur = #emailTextbox")
+	@Listen("onChange = #emailTextbox")
 	public void emailError() {
 		String email = emailTextbox.getValue();
 		emailError.setVisible(false);
 		if (isValidEmail(email)) {
-			System.out.println("email valid");
 		} else if (email.isEmpty()) {
 			emailError.setVisible(true);
 			emailError.setValue("Please enter email");
 		} else {
-
 			emailError.setVisible(true);
 			emailError.setValue("Email is not valid");
-			System.out.println("email not valid");
 		}
 		isValid();
 	}
 
-	@Listen("onBlur = #officeNameTextbox")
+	@Listen("onChange = #officeNameTextbox")
 	public void officeNameError() {
 		String officeName = officeNameTextbox.getValue();
-
 		officeNameError.setVisible(false);
 		if (officeName.isBlank() || officeName.isEmpty()) {
 			officeNameError.setVisible(true);
@@ -182,30 +160,25 @@ public class OfficeController extends SelectorComposer<Component> {
 		isValid();
 	}
 
-	@Listen("onBlur = #mobileTextbox")
+	@Listen("onChange = #mobileDoubleBox")
 	public void mobileError() {
-		String mobile = mobileTextbox.getValue();
+		Double mobileValue = mobileDoubleBox.getValue();
+
 		mobileError.setVisible(false);
-		if (isValidMobile(mobile)) {
-			System.out.println("Mobile number valid");
-		} else if (mobile.isEmpty()) {
-			mobileError.setVisible(true);
-			mobileError.setValue("Please enter Mobile Number");
-		} else {
+		if (!isValidMobile(mobileValue)) {
 			mobileError.setVisible(true);
 			mobileError.setValue("Mobile number is not valid");
-			System.out.println("Mobile number not valid");
 		}
 		isValid();
 	}
 
 	private boolean isValid() {
-		boolean mobile = isValidMobile(mobileTextbox.getValue());
+
+		boolean mobile = isValidMobile(mobileDoubleBox.getValue());
 		boolean email = isValidEmail(emailTextbox.getValue());
 		boolean officeName = isValidOfficeName(officeNameTextbox.getValue());
-        boolean url =isValidUrl(urlTextbox.getValue());
-        
-		if (mobile && email && officeName&& url) {
+		boolean url = isValidUrl(urlTextbox.getValue());
+		if (mobile && email && officeName && url) {
 			submit.setVisible(true);
 			return true;
 		}
@@ -222,27 +195,27 @@ public class OfficeController extends SelectorComposer<Component> {
 				submit.setVisible(false);
 				return false;
 			}
-			
 		}
 		return true;
 	}
-	
-	private boolean isValidOfficeName(String officeName) {
 
+	private boolean isValidOfficeName(String officeName) {
 		if (officeName.isEmpty() || officeName.isBlank()) {
 			return false;
 		}
 		return true;
 	}
 
-	private boolean isValidMobile(String mobile) {
-		String mobilePattern = "\\d{10}";
-		if (mobile.isEmpty() || mobile.isBlank()) {
-			return false;
-		} else if (!mobile.matches(mobilePattern)) {
-			return false;
-		}
-		return mobile.matches(mobilePattern);
+	private boolean isValidMobile(Double mobile) {
+		if (mobile == null) {
+	        return false;
+	    }
+	    String mobileString = String.format("%.0f", mobile);
+	    if (mobileString.length() != 10) {
+	        return false;
+	    }
+		return true;
+		
 	}
 
 	private boolean isValidEmail(String email) {
@@ -259,11 +232,9 @@ public class OfficeController extends SelectorComposer<Component> {
 
 	@Listen("onClick = #submit")
 	public void submit() {
-
 		if (!isValid()) {
 			return;
 		}
-
 		int officeid = officeIntId.getValue();
 		int tempID = tempIntId.getValue();
 		String officeName = officeNameTextbox.getValue();
@@ -275,7 +246,7 @@ public class OfficeController extends SelectorComposer<Component> {
 		String telephone1 = telephone1Textbox.getValue();
 		String telephone2 = telephone2Textbox.getValue();
 		String fax = faxTextbox.getValue();
-		String mobile = mobileTextbox.getValue();
+		Double mobile = mobileDoubleBox.getValue();
 		String email = emailTextbox.getValue();
 		String url = urlTextbox.getValue();
 		String status = statusCombobox.getSelectedItem() != null ? statusCombobox.getSelectedItem().getLabel() : "";
@@ -295,14 +266,12 @@ public class OfficeController extends SelectorComposer<Component> {
 		contactOffice.setUrl(url);
 		contactOffice.setStatus(status);
 		contactOffice.setTempId(tempID);
-
 		Session session = Sessions.getCurrent();
 		Integer myInteger = (Integer) session.getAttribute("myInteger");
 		int value = 0;
 		if (myInteger != null) {
 			value = myInteger.intValue();
 		}
-
 		if (officeid > 0) {
 			if (tempID > 0) {
 				List<ContactOffice> contactOffices = temporaryOfficeList;
@@ -333,7 +302,6 @@ public class OfficeController extends SelectorComposer<Component> {
 				contactController.loadContactOffice(contactController.contactId, null);
 				mypopup.close();
 			}
-
 		} else if (value > 0 && officeid == 0) {
 			mypopup.close();
 			contactOffice.setContactId(contactController.contactId);
@@ -354,7 +322,6 @@ public class OfficeController extends SelectorComposer<Component> {
 		clearFields();
 	}
 
-	// Method to clear input fields after submission
 	public void clearFields() {
 		officeIntId.setValue(0);
 		officeNameTextbox.setValue("");
@@ -366,7 +333,7 @@ public class OfficeController extends SelectorComposer<Component> {
 		telephone1Textbox.setValue("");
 		telephone2Textbox.setValue("");
 		faxTextbox.setValue("");
-		mobileTextbox.setValue("");
+		mobileDoubleBox.setValue(null);
 		emailTextbox.setValue("");
 		urlTextbox.setValue("");
 		statusCombobox.setSelectedIndex(0);

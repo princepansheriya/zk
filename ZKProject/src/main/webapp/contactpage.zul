@@ -1,78 +1,89 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window id="contactWindow" >
-		<style src="style1.css" />
+	<window id="contactWindow">
+		<style src="contactpage.css" />
+
 		<div sclass="admin">
-		<label>Admin</label>
-		<hlayout >
-			<!-- Left side: Text boxes -->
-			<vlayout>
-				<!-- ID Field -->
-				<hlayout>
-					<label value="ID:" />
-					<label id="idLabel" style="margin-left:18px;" />
-					<intbox id="contactIntId" value="0" visible="false" />
-				</hlayout>
 
-				<!-- Date Added Field -->
-				<hlayout>
-					<label value="Date Added:" />
-					<label id="dateAddedLabel" value="" />
-				</hlayout>
+			<label>Admin</label>
+			<hlayout>
+				<vlayout>
+					<hlayout>
+						<label value="ID:" />
+						<label id="idLabel" style="margin-left:18px;" />
+						<intbox id="contactIntId" value="0"
+							visible="false" />
+					</hlayout>
 
-				<!-- Added By Field -->
-				<hlayout>
-					<label value="Added By:" />
-					<label id="addedByLabel" value="" />
-				</hlayout>
+					<!-- Date Added Field -->
+					<hlayout>
+						<label value="Date Added:" />
+						<label id="dateAddedLabel" value="" />
+					</hlayout>
 
-				<!-- Status Field -->
-				<hlayout>
-					<label sclass="status" value="Status:"
-						style="margin-top:40px;" />
-					<radiogroup id="statusRadiogroup"
-						style="margin-left:80px;">
-						<radio label="Active" />
-						<radio label="Inactive" />
-						<radio label="Pending" />
-					</radiogroup>
-					<label id="statusError" style="color:red;" visible="false"/>
-				</hlayout>
+					<!-- Added By Field -->
+					<hlayout>
+						<label value="Added By:" />
+						<label id="addedByLabel" value="" />
+					</hlayout>
 
-				<!-- Company Name Field -->
-				<hlayout>
-					<label value="Company Name:" />
-					<textbox id="companyNameTextbox" value=""
-						style="margin-left:18px;" />
-						<label id="companyNameError" style="color:red;" visible="false"/>
-				</hlayout>
+					<!-- Status Field -->
+					<hlayout>
+						<label sclass="status" value="Status:"
+							style="margin-top:40px;" />
+						<radiogroup id="statusRadiogroup"
+							style="margin-left:80px;">
+							<radio label="Active" />
+							<radio label="Inactive" />
+							<radio label="Pending" />
+						</radiogroup>
+						<label id="statusError" style="color:red;"
+							visible="false" />
+					</hlayout>
 
-				<!-- Short Name Field -->
-				<hlayout>
-					<label value="Short Name:" />
-					<textbox id="shortNameTextbox" value=""
-						style="margin-left:48px;" />
-						<label id="shortNameError" style="color:red;" visible="false"/>
-						
-				</hlayout>
-			</vlayout>
-		</hlayout>
+					<!-- Company Name Field -->
+					<hlayout>
+						<label value="Company Name:" />
+						<textbox id="companyNameTextbox" value=""
+							style="margin-left:18px;" />
+						<label id="companyNameError" style="color:red;"
+							visible="false" />
+					</hlayout>
+
+					<!-- Short Name Field -->
+					<hlayout>
+						<label value="Short Name:" />
+						<textbox id="shortNameTextbox" value=""
+							style="margin-left:48px;" />
+						<label id="shortNameError" style="color:red;"
+							visible="false" />
+
+					</hlayout>
+				</vlayout>
+			</hlayout>
 		</div>
+
 		<label sclass="categories">Categories</label>
-			<!-- Right side: Category grid -->
-			<grid id="categoriesGrid" width="400px"
-				style="margin-left: 183px; border:none;" >
-			
-				<template name="model">
-					<row style="border:none;">
-						<!-- Hide the ID label -->
-						<label value="${each.id}" visible="false" /> 
-						<label value="${each.name}" sclass="red-text"  style=""/>
-						<!-- Checkbox for each category -->
-						<checkbox value="${each}"  checked="${each.selected}"/>
-					</row>
-				</template>
-			</grid>
-		<label id="categoriesError" style="color:red;" visible="false"/>
-</window>
+
+		<!-- Right side: Category grid -->
+		<grid id="categoriesGrid" width="400px"
+			style="margin-left: 183px; border:none;">
+
+			<template name="model">
+				<row style="border:none;">
+					<!-- Hide the ID label -->
+					<label value="${each.id}" visible="false" />
+					<label value="${each.name}" sclass="red-text"
+						style="" />
+					<!-- Checkbox for each category -->
+					<checkbox value="${each}"
+						checked="${each.selected}" />
+				</row>
+			</template>
+
+		</grid>
+
+		<label id="categoriesError" style="color:red;" visible="false" />
+
+	</window>
 </zk>

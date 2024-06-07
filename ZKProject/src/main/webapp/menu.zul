@@ -1,34 +1,39 @@
 <zk>
 	<window apply="controller.MenuController">
 		<style src="menu.css" />
+
 		<div sclass="row head-row">
 			<div sclass="col-lg-6 col-md-6 head">
 				<div sclass="">
 					<a>
-						<image src="logo.webp" id="logo" style="width:102px" />
+						<image src="logo.webp" id="logo"
+							style="width:102px" />
 					</a>
 				</div>
 			</div>
+
 			<div sclass="col-lg-6 col-md-6">
-				<div sclass="head-section1" style="padding-left: 681px;
-    padding-top: 20px;" >
+				<div sclass="head-section1"
+					style="padding-left: 681px;padding-top: 20px;">
 
 					<hlayout sclass="head-half">
 						<div sclass="name" style="padding-top: 5px;">
-							<label style="font-size: larger;
-    font-weight: bold;">
+							<label
+								style="font-size: larger;font-weight: bold;">
 								Hello ${sessionScope.loggedInUser}
 							</label>
 						</div>
-						<div sclass="logout" style=" padding-left: 25px;
-    font-size: 16px;">
-							<button label="Logout" id="logout" tooltiptext="Logout"  style="padding: 8px 20px 8px 20px;
-    font-size: 16px;"/>
+						<div sclass="logout"
+							style=" padding-left: 25px;font-size: 16px;">
+							<button label="Logout" id="logout"
+								tooltiptext="Logout"
+								style="padding: 8px 20px 8px 20px;font-size: 16px;" />
 						</div>
 					</hlayout>
 
 				</div>
 			</div>
+
 		</div>
 
 		<div sclass="row">
@@ -46,10 +51,8 @@
 					</menu>
 					<menu label="Sale">
 						<menupopup>
-							<menuitem label="New Sale"
-								id="newsale" />
-							<menuitem label="List Sale"
-								id="listsale" />
+							<menuitem label="New Sale" id="newsale" />
+							<menuitem label="List Sale" id="listsale" />
 							<menuitem label="Search Sale"
 								id="searchsale" />
 						</menupopup>
@@ -57,15 +60,12 @@
 
 				</menubar>
 			</div>
-			<div sclass="col-lg-10" style="padding-right: 79px;padding-left:0;">
+
+			<div sclass="col-lg-10"
+				style="padding-right: 79px;padding-left:0;">
 				<include id="subPageInclude" src="dashboard.zul" />
 			</div>
 
 		</div>
-
-
-
-
-
 	</window>
 </zk>

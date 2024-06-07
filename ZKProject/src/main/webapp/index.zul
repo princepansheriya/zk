@@ -6,21 +6,18 @@
 		<div sclass="row main" style=" margin: 0px 12px 0px 12px;">
 
 
-			<label id="errorBox" sclass="error-box" visible="false" />
-
+			
 			<div sclass="main-part row" style="">
 
-				<div sclass="left-side col-lg-4 col-md-4" 
-					>
+				<div sclass="left-side col-lg-4 col-md-4">
 					<div sclass="img">
 						<a>
 							<image src="logo.webp" style="width:120px" />
 						</a>
 					</div>
-
-
 				</div>
-				<div sclass="right-side col-lg-8 col-md-8" style="position: relative;">
+				<div sclass="right-side col-lg-8 col-md-8"
+					style="position: relative;">
 					<div sclass="login-label"
 						style=" padding: 52px 0px 25px 0px;text-align: center;">
 						<label
@@ -28,32 +25,27 @@
 							Login page!!
 						</label>
 					</div>
-
-
-					<div style="padding: 41px 0px 0px 41px;text-align: center;"
-						sclass="form-section">
-						
-					
+					<div style="" sclass="form-section">
 						<hlayout id="stage1" sclass="stage1-layout">
-							<textbox id="username" sclass="username" 
+							<textbox id="username" sclass="username"
 								placeholder="Enter your username" />
 							<button id="nextBtn"
-								onClick="@command('nextStage')" label="Next" sclass="login-btn" tooltiptext="Next"/>
+								onClick="@command('nextStage')" label="Next" sclass="login-btn"
+								tooltiptext="Next"  />
 						</hlayout>
-
-
 						<hlayout id="stage2" sclass="stage2-layout">
-							<textbox id="password" type="password" 
+							<textbox id="password" type="password"
 								sclass="password" placeholder="Enter your password" />
 							<button id="backBtn"
-								onClick="@command('backStage')" label="Back" sclass="login-btn" tooltiptext="Back"/>
+								onClick="@command('backStage')" label="Back" sclass="login-btn"
+								tooltiptext="Back" />
 							<button id="loginBtn"
-								onClick="@command('login')" label="Login" sclass="login-btn" tooltiptext="Login"/>
-					
-					</hlayout>
-				
-					</div>
+								onClick="@command('login')" label="Login" sclass="login-btn"
+								tooltiptext="Login" />
 
+						</hlayout>
+						<label id="errorBox" sclass="error-box" visible="false" />
+					</div>
 				</div>
 			</div>
 

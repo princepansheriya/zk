@@ -3,10 +3,10 @@
 	<window apply="controller.OfficeController">
 		<style src="office.css" />
 		<div sclass="row">
-			<label id="officeLabel"  sclass="col-lg-6"
+			<label id="officeLabel" sclass="col-lg-6"
 				style="font-size: large;font-weight: bolder;color: #d3870f;
 			    padding-left: 56px;padding-top: 20px;" />
-			<div sclass="col-lg-6" >
+			<div sclass="col-lg-6">
 				<button label="X" id="canselOffice"
 					style="margin-left: 268px;border-radius: 50%;padding: 8px 11px;font-size: 12px;cursor: pointer;" />
 			</div>
@@ -24,7 +24,8 @@
 					<hlayout sclass="col-lg-6">
 						<label value="*Office Name:" sclass="label"
 							style="padding-right: 11px;" />
-						<textbox id="officeNameTextbox" style="padding-right: 28px;"/>
+						<textbox id="officeNameTextbox"
+							style="padding-right: 28px;" maxlength="50" />
 					</hlayout>
 					<label value="" id="officeNameError" visible="false"
 						style="color: red;position: absolute;left: 147px;top: 24px;font-size: 14px;" />
@@ -33,21 +34,24 @@
 					<hlayout sclass="col-lg-6">
 						<label value="Address 1:" sclass="label"
 							style="padding-right: 24px;padding-left: 14px;" />
-						<textbox id="address1Textbox" style="padding-right: 28px;" />
+						<textbox id="address1Textbox"
+							style="padding-right: 28px;" maxlength="255" />
 					</hlayout>
 				</div>
 
 				<div sclass="row" style="padding: 10px 0;">
-					<hlayout sclass="col-lg-6" >
+					<hlayout sclass="col-lg-6">
 						<label value="Address 2:" sclass="label"
 							style="padding-right: 26px; padding-left: 17px;" />
-						<textbox id="address2Textbox" style="padding-right: 28px;"/>
+						<textbox id="address2Textbox"
+							style="padding-right: 28px;" maxlength="255" />
 					</hlayout>
 
 					<hlayout sclass="col-lg-6">
 						<label value="Town/City:" sclass="label"
 							style="padding-right: 26px;padding-left: 14px;" />
-						<textbox id="townCityTextbox" style="padding-right: 28px;"/>
+						<textbox id="townCityTextbox"
+							style="padding-right: 28px;" maxlength="15" />
 					</hlayout>
 
 				</div>
@@ -56,13 +60,15 @@
 					<hlayout sclass="col-lg-6">
 						<label value="Postcode:" sclass="label"
 							style="padding-right: 33px;    padding-left: 16px;" />
-						<textbox id="postcodeTextbox" style="padding-right: 28px;"/>
+						<textbox id="postcodeTextbox"
+							style="padding-right: 28px;" maxlength="15" />
 					</hlayout>
 
 					<hlayout sclass="col-lg-6">
 						<label value="Country:" sclass="label"
 							style="padding-right: 40px;padding-left: 14px;" />
-						<textbox id="countryTextbox" style="padding-right: 28px;"/>
+						<textbox id="countryTextbox"
+							style="padding-right: 28px;" maxlength="15" />
 					</hlayout>
 
 				</div>
@@ -71,12 +77,15 @@
 					<hlayout sclass="col-lg-6">
 						<label value="Telephone 1:" sclass="label"
 							style="padding-left: 16px;padding-right: 12px;" />
-						<textbox id="telephone1Textbox" style="padding-right: 28px;"/>
+						<textbox id="telephone1Textbox" maxlength="15"
+							style="padding-right: 28px;" />
 					</hlayout>
 
 					<hlayout sclass="col-lg-6">
-						<label value="Telephone 2:" sclass="label" style="padding-left: 14px;"/>
-						<textbox id="telephone2Textbox" style="padding-right: 28px;"/>
+						<label value="Telephone 2:" sclass="label"
+							style="padding-left: 14px;" />
+						<textbox id="telephone2Textbox" maxlength="15"
+							style="padding-right: 28px;" />
 					</hlayout>
 
 				</div>
@@ -86,13 +95,16 @@
 					<hlayout sclass="col-lg-6">
 						<label value="Fax:" sclass="label"
 							style="padding-right: 77px;padding-left: 16px;" />
-						<textbox id="faxTextbox" style="padding-right: 28px;"/>
+						<textbox id="faxTextbox"
+							style="padding-right: 28px;" maxlength="15" />
 					</hlayout>
 
 					<hlayout sclass="col-lg-6">
 						<label value="*Mobile:" sclass="label"
 							style="padding-right: 49px;" />
-						<textbox id="mobileTextbox"  maxlength="10" instant="true" style="padding-right: 28px;"/>
+					<!-- 	<textbox id="mobileTextbox" maxlength="10"
+							instant="true" style="padding-right: 28px;" />  -->
+						<doublebox id="mobileDoubleBox" maxlength="10" style="padding-right: 82px;"/>
 					</hlayout>
 					<label value="" id="mobileError" visible="false"
 						style="color: red;position: absolute;left: 486px;top: 35px;font-size: 14px;" />
@@ -103,7 +115,8 @@
 					<hlayout sclass="col-lg-6">
 						<label value="*Email:" sclass="label"
 							style="padding-right: 62px;" />
-						<textbox id="emailTextbox" style="padding-right: 28px;"/>
+						<textbox id="emailTextbox" 
+							style="padding-right: 28px;" />
 
 					</hlayout>
 					<label value="" id="emailError" visible="false"
@@ -112,10 +125,11 @@
 						style="position: relative;">
 						<label value="URL:" sclass="label"
 							style="padding-right: 68px;padding-left: 16px;" />
-						<textbox id="urlTextbox" style="padding-right: 28px;"/>
-						
+						<textbox id="urlTextbox"
+							style="padding-right: 28px;" maxlength="65" />
+
 					</hlayout>
-<label value="" id="urlError" visible="false"
+					<label value="" id="urlError" visible="false"
 						style="color: red;  position: absolute;left: 486px;top: 34px;font-size: 14px;" />
 				</div>
 
@@ -125,8 +139,8 @@
 						<label value="Status:"
 							style="margin-top:40px;padding-left: 16px;padding-right: 56px;"
 							sclass="label" />
-						<combobox id="statusCombobox"
-							 autodrop="true" readonly="true">
+						<combobox id="statusCombobox" autodrop="true" 
+							readonly="true">
 							<comboitem label="Active" value="Active" />
 							<comboitem label="Inactive"
 								value="Inactive" />
@@ -136,16 +150,12 @@
 
 				<div sclass="row">
 					<div sclass="col-lg-6">
-						<button label="save" id="submit" visible="false"
-							style="
-    margin-top: 20px;
-    margin-left: 264px;
-    padding: 8px 24px 8px 24px;
-    font-size: 14px;
-    background: #7abfd1;" />
+						<button label="Save" id="submit" visible="false" tooltiptext="Save" 
+							style="margin-top: 20px; margin-left: 290px;padding: 8px 24px 8px 24px;font-size: 14px;" />
 					</div>
 				</div>
 			</div>
 		</div>
+		
 	</window>
 </zk>

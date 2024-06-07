@@ -1,0 +1,26 @@
+.admin {
+    padding: 20px;
+}
+
+label {
+    width: 120px; 
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+textbox {
+    width: 200px; 
+}
+
+.error-message {
+    color: red;
+}
+
+radiogroup {
+    margin-left: 20px; 
+}
+
+.radio {
+    margin-right: 10px;
+}

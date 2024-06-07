@@ -1,66 +1,60 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f4f9;
+	font-family: Arial, sans-serif;
+	background-color: #f0f4f9;
 }
 
 /* Define transition for smooth sliding effect */
 .stage1-layout, .stage2-layout {
-    transition: transform 0.5s ease-in-out;
+	transition: transform 0.5s ease-in-out;
 }
 
 /* Hide stage2 initially */
 .stage2-layout {
-    transform: translateX(100%);
-
+	transform: translateX(120%);
 }
 
 /* Show stage2 when needed */
 .show-stage2 .stage1-layout {
-    transform: translateX(-160%);
+	transform: translateX(-160%);
 }
 
 .show-stage2 .stage2-layout {
-    transform: translateX(0);
+	transform: translateX(0);
 }
 
 .error-box {
-    color: red;
-    border: 1px solid red;
-    background-color: #ffe6e6;
-    padding: 10px;
-    border-radius: 5px;
-    margin-left: 19%;
-    margin-top: -2px;
-    position: absolute;
+	color: red;
+	border: 1px solid red;
+	background-color: #ffe6e6;
+	padding: 10px;
+	border-radius: 5px;
+	left: 32%;
+	top: 121%;
+	position: absolute;
 }
-.left-side{
+
+.left-side {
 	border-right: 1px solid #1c1313;
-    padding: 78px 0px 88px 0px;
-    text-align: center;
+	padding: 78px 0px 88px 0px;
+	text-align: center;
 }
-@media (max-width: 998px) {
-	.left-side{
-	border-right: none;
-  
+
+.form-section {
+	padding: 41px 0px 0px 41px;
+	text-align: center;
+	position: relative;
 }
-.error-box {
-	   margin-left: 9%;
+
+@media ( max-width : 998px) {
+	.left-side {
+		border-right: none;
+	}
+	.error-box {
+		left: 20%;
+		top: 68%;
+	}
+	.form-section {
+		padding: 41px 0px 30px 15px;
+		text-align: center;
 	}
 }
-	
-
-/* .login-btn {
-    padding: 10px 25px 10px 26px;
-        margin-top: 1px;
-}
-
-.username {
-    padding: 10px 120px 10px 10px;
-    font-size: 14px;
-}
-
-.password {
-	 padding: 10px 120px 10px 10px;
-    font-size: 14px;
-} */
-

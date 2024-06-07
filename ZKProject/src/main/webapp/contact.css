@@ -1,8 +1,20 @@
-@charset "ISO-8859-1";
+.z-row:hover>.z-row-inner {
+	background: linear-gradient(to bottom, #ffffff 0%, #ffffff 100%);
+}
 
 .label {
 	color: black;
 	font-size: 16px;
+}
+.truncated {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	max-width: 250px; 
+	display: inline-block;
+}
+.grid-section tr:hover  {
+   background-color: none;
 }
 
 .admin-section {
@@ -15,17 +27,22 @@
 	padding-bottom: 13px;
 }
 
+input[type="checkbox"] {
+    margin: 0px 0px 5px!important;
+    line-height: normal;
+}
+
 .admin-label {
-	font-size: 16px !important; /* Change the font size as desired */ 
-	color: #d3870f; /* Change the color as desired */
+	font-size: 16px !important; 
+	color: #d3870f; 
 	font-weight: bold;
-	padding-left: 56px;
+	padding-left: 54px;
 }
 
 .categorie-section {
-    border: 2px solid black;
-    margin: 9px 20px 20px 20px;
-    padding: 20px 28px;
+	border: 2px solid black;
+	margin: 9px 20px 20px 20px;
+	padding: 20px 12px;
 }
 
 .z-grid-odd>.z-row-inner, .z-grid-odd>.z-cell {
@@ -33,15 +50,16 @@
 }
 
 .categories {
-	font-size: 16px !important; /* Change the font size as desired */
-	color: #d3870f; /* Change the color as desired */
+	font-size: 16px !important; 
+	color: #d3870f; 
 	font-weight: bold;
 	padding-left: 46px;
 }
-.contact-page {
-    padding: 25px 0 0 0;
 
+.contact-page {
+	padding: 25px 0 0 0;
 }
+
 .office-section {
 	border: 2px solid black;
 	margin: 6px 20px;
@@ -53,8 +71,8 @@
 }
 
 .Office-label {
-	font-size: 16px !important; /* Change the font size as desired */
-	color: #d3870f; /* Change the color as desired */
+	font-size: 16px !important; 
+	color: #d3870f; 
 	font-weight: bold;
 	padding-left: 46px;
 }

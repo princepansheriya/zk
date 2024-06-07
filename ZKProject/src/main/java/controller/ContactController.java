@@ -2,6 +2,8 @@ package controller;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,6 +20,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.Include;
 import org.zkoss.zul.Intbox;
@@ -39,7 +42,10 @@ import model.ContactOffice;
 public class ContactController extends SelectorComposer<Component> {
 
 	private static final long serialVersionUID = 1L;
-
+	@Wire
+	private Combobox pageSizeCombobox;
+	@Wire
+	private Combobox pageSizeOffice;
 	@Wire
 	private Label idLabel;
 	@Wire
@@ -78,24 +84,29 @@ public class ContactController extends SelectorComposer<Component> {
 	Contact contact;
 	@Wire
 	private Include officePageInclude;
-	
 	@Wire
 	Paging paging;
+	@Wire
+	Paging paging1;
+	@Wire
+	Paging paging2;
 	@Wire
 	private Grid contactGrid;
 	Include subPageInclude;
 	Execution executions = Executions.getCurrent();
 	public static int contactId;
 	public static ContactOffice contactOffices;
-	
 	OfficeController officeController;
 	int currentPage = 0;
-	int pageSize = 2;
+	int pageSize = 10;
+	int currentPage1 = 0;
+	int pageSize1 = 5;
+	int currentPage2 = 0;
+	int pageSize2 = 5;
 
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
-
 		Session session = Sessions.getCurrent();
 		session.setAttribute("mypopup", mypopup);
 		session.setAttribute("myInteger", -1);
@@ -103,12 +114,16 @@ public class ContactController extends SelectorComposer<Component> {
 		officeController = (OfficeController) Executions.getCurrent().getAttributes().get("officeController");
 		subPageInclude = (Include) executions.getArg().get("subPageInclude");
 		if (comp.getId().equals("contactWindow")) {
+			paging1.setVisible(false);
+			paging2.setVisible(true);
 			Session sessions = Sessions.getCurrent();
 			contact = (Contact) (sessions).getAttribute("customer");
 			loadCategoriesData();
 			statusCombobox.setSelectedIndex(0);
+			pageSizeOffice.setSelectedItem(pageSizeOffice.getItems().get(0));
 			if (contact != null && contact.getId() > 0) {
-
+				paging2.setVisible(false);
+				paging1.setVisible(true);
 				addedByLabel.setValue(contactDao.getUsernameByContactId(contact.getId()));
 				Timestamp timestamp = contact.getCreatedOn();
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -121,17 +136,16 @@ public class ContactController extends SelectorComposer<Component> {
 				contactId = contact.getId();
 				loadContactOffice(contact.getId(), null);
 				if (contact != null && contact.getId() > 0) {
-//					Session session = Sessions.getCurrent();
 					session.setAttribute("myInteger", contact.getId());
 				}
 				loadCategoriesDataa();
 				statusCombobox.setValue(contact.getStatus());
-
 				contact.setId(0);
 			} else {
 				contactId = 0;
 			}
 		} else if (comp.getId().equals("loginWindow")) {
+			pageSizeCombobox.setSelectedItem(pageSizeCombobox.getItems().get(0));
 			loadContactsData();
 		}
 	}
@@ -140,13 +154,44 @@ public class ContactController extends SelectorComposer<Component> {
 		List<Contact> contacts = contactDao.getAllContacts();
 		int startIndex = currentPage * pageSize;
 		int endIndex = Math.min(startIndex + pageSize, contacts.size());
-		List<Contact> contacts1 = contacts.subList(startIndex, endIndex);	
+		List<Contact> contacts1 = contacts.subList(startIndex, endIndex);
 		if (contactGrid != null) {
 			contactGrid.setModel(new ListModelList<>(contacts1));
 			updatePagingInfo();
+		} 
+	}
+
+	public void loadContactOffice(int id, List<ContactOffice> contactOffices2) {
+		if (id == 0) {
+			List<ContactOffice> contactOffices = contactOffices2;
+			 Collections.sort(contactOffices, Comparator.comparingInt(ContactOffice::getId).reversed());
+			int startIndex = currentPage2 * pageSize2;
+			int endIndex = Math.min(startIndex + pageSize2, contactOffices.size());
+			List<ContactOffice> contactOffice = contactOffices.subList(startIndex, endIndex);
+			officeGrid.setModel(new ListModelList<>(contactOffice));
+			updatePagingInfo2(id, contactOffices);
 		} else {
-			System.err.println("contactGrid is not properly initialized");
+			List<ContactOffice> contactOffice = contactDao.getCompanyContactOffice(id);
+			int startIndex = currentPage1 * pageSize1;
+			int endIndex = Math.min(startIndex + pageSize1, contactOffice.size());
+			List<ContactOffice> contactOffice1 = contactOffice.subList(startIndex, endIndex);
+			officeGrid.setModel(new ListModelList<>(contactOffice1));
+			updatePagingInfo1(id, contactOffice);
 		}
+	}
+
+	private void updatePagingInfo1(int id, List<ContactOffice> contactOffices2) {
+		int totalSize = contactDao.getCompanyContactOffice(id).size();
+		paging1.setTotalSize(totalSize);
+		paging1.setPageSize(pageSize1);
+		paging1.setActivePage(currentPage1);
+	}
+
+	private void updatePagingInfo2(int id, List<ContactOffice> contactOffices2) {
+		int totalSize = contactOffices2.size();
+		paging2.setTotalSize(totalSize);
+		paging2.setPageSize(pageSize2);
+		paging2.setActivePage(currentPage2);
 	}
 
 	private void updatePagingInfo() {
@@ -155,37 +200,84 @@ public class ContactController extends SelectorComposer<Component> {
 		paging.setPageSize(pageSize);
 		paging.setActivePage(currentPage);
 	}
-	
+
+	@Listen("onChange = #pageSizeCombobox")
+	public void changePageSize() {
+		Comboitem selectedItem = pageSizeCombobox.getSelectedItem();
+		if (selectedItem != null) {
+			pageSize = Integer.parseInt(selectedItem.getValue());
+			currentPage = 0;
+			loadContactsData();
+		}
+	}
+
+	@Listen("onChange = #pageSizeOffice")
+	public void changePageSizeOffice() {
+		Comboitem selectedItem = pageSizeOffice.getSelectedItem();
+		if (selectedItem != null) {
+			if (contactId == 0) {
+				pageSize2 = Integer.parseInt(selectedItem.getValue());
+				currentPage2 = 0;
+				loadContactOffice(contactId, officeController.temporaryOfficeList);
+			} else {
+				pageSize1 = Integer.parseInt(selectedItem.getValue());
+				currentPage1 = 0;
+				loadContactOffice(contactId, contactDao.getCompanyContactOffice(contactId));
+			}
+		}
+	}
+
+	@Listen("onChange = #shortNameTextbox")
+	public void validateShortName() {
+	    String shortName = shortNameTextbox.getValue();
+	    // Convert all characters to uppercase
+	    String cleanedInput = shortName.toUpperCase();
+	    // Remove any non-uppercase letters
+	    cleanedInput = cleanedInput.replaceAll("[^A-Z]", "");
+	    shortNameTextbox.setValue(cleanedInput);
+	}
+
 	@Listen("onPaging = #paging")
 	public void onPaging() {
 		currentPage = paging.getActivePage();
 		loadContactsData();
 	}
-	
+
+	@Listen("onPaging = #paging1")
+	public void onPagingOffice() {
+		currentPage1 = paging1.getActivePage();
+		loadContactOffice(contactId, null);
+	}
+
+	@Listen("onPaging = #paging2")
+	public void onPagingOffice2() {
+		currentPage2 = paging2.getActivePage();
+		List<ContactOffice> contactOffices = officeController.temporaryOfficeList;
+		loadContactOffice(0, contactOffices);
+	}
+
 	@Listen("onClick = #officeForm")
 	public void officeForm() {
 		officePageInclude.setSrc("office.zul");
 	}
 
-	@Listen("onBlur = #shortNameTextbox")
+	@Listen("onChange = #shortNameTextbox")
 	public void validShortName() {
-		String shortName = shortNameTextbox.getValue();
-	    String regex = "^[A-Z]+$";
 		Contact contact = new Contact();
 		contact.setId(contactIntId.getValue());
 		contact.setShortName(shortNameTextbox.getValue());
 		int result = contactDao.checkShortnameExist(contact);
-		
+
 		if (!shortNameTextbox.getValue().isBlank() && !shortNameTextbox.getValue().isEmpty() && result > 0) {
 			shortNameError.setValue("Short name already exists.");
 			shortNameError.setVisible(true);
-		
+
 		} else {
 			shortNameError.setVisible(false);
 		}
 	}
 
-	@Listen("onBlur = #shortNameTextbox, #companyNameTextbox,#statusCombobox, #categoriesGrid")
+	@Listen("onChange = #shortNameTextbox, #companyNameTextbox,#statusCombobox, #categoriesGrid")
 	public void validfilds() {
 		validContactSection();
 	}
@@ -195,7 +287,7 @@ public class ContactController extends SelectorComposer<Component> {
 		validContactSection();
 	}
 
-	@Listen("onClick = #categoriesGrid")
+	@Listen("onChange = #categoriesGrid")
 	public void validCheckBox1() {
 		validContactSection();
 	}
@@ -222,12 +314,10 @@ public class ContactController extends SelectorComposer<Component> {
 	}
 
 	public boolean validOffice() {
-
 		Rows rowsComponent = officeGrid.getRows();
 		if (rowsComponent == null) {
 			return false;
 		}
-
 		List<Component> rows = officeGrid.getRows().getChildren();
 		for (Component row : rows) {
 			if (row instanceof Row) {
@@ -255,7 +345,6 @@ public class ContactController extends SelectorComposer<Component> {
 		boolean status = validStatus();
 		boolean companyName = validCompanyName();
 		boolean office = validOffice();
-
 		if (shortname && status && companyName && category && result != 1 && office) {
 			finalSubmit.setVisible(true);
 			return true;
@@ -319,9 +408,7 @@ public class ContactController extends SelectorComposer<Component> {
 		Row contactRow = (Row) target.getParent().getParent();
 		Contact contact = (Contact) contactRow.getValue();
 		selectedContact = contact;
-
 		mpopup.open(800, 150);
-
 	}
 
 	@Listen("onClick = #confirmDelete")
@@ -344,7 +431,6 @@ public class ContactController extends SelectorComposer<Component> {
 		OfficeController officeController = (OfficeController) Executions.getCurrent().getAttribute("officeController");
 		officeController.clearFields();
 		mypopup.open(700, 150);
-
 	}
 
 	@Listen("onDelete = #contactWindow")
@@ -368,7 +454,7 @@ public class ContactController extends SelectorComposer<Component> {
 			while (iterator.hasNext()) {
 				ContactOffice tempOffice = iterator.next();
 				if (tempOffice.getTempId() == office1.getTempId()) {
-					iterator.remove(); // Use iterator.remove() to safely remove elements
+					iterator.remove();
 				}
 			}
 			loadContactOffice(0, contactOffices);
@@ -385,39 +471,16 @@ public class ContactController extends SelectorComposer<Component> {
 		deleteOfficePooup.close();
 	}
 
-//	@Listen("onDelete = #contactWindow")
-//	public void onDelete(ForwardEvent event) {
-//		ContactOffice office = (ContactOffice) event.getData();
-//		if (office.getTempId() > 0) {
-//			List<ContactOffice> contactOffices = officeController.temporaryOfficeList;
-//			Iterator<ContactOffice> iterator = contactOffices.iterator();
-//			while (iterator.hasNext()) {
-//				ContactOffice tempOffice = iterator.next();
-//				if (tempOffice.getTempId() == office.getTempId()) {
-//					iterator.remove(); // Use iterator.remove() to safely remove elements
-//				}
-//			}
-//			loadContactOffice(0, contactOffices);
-//		} else {
-//			contactDao.deleteOffice(office.getId());
-//			loadContactOffice(contactId, null);
-//		}
-//	}
-
 	@Listen("onUpdate = #contactWindow")
 	public void onUpdate(ForwardEvent event) {
 		ContactOffice office = (ContactOffice) event.getData();
 		if (office != null) {
 			Sessions.getCurrent().setAttribute("contactOffices", office);
-		} else {
-			System.out.println("- Contact office not found.");
 		}
 		officePageInclude.setDynamicProperty("contactController", this);
 		officePageInclude.setSrc("");
 		officePageInclude.setSrc("office.zul");
-//		mypopup.open(event.getTarget());
 		mypopup.open(700, 150);
-
 	}
 
 	private void loadCategoriesData() {
@@ -425,24 +488,11 @@ public class ContactController extends SelectorComposer<Component> {
 		categoriesGrid.setModel(new ListModelList<>(categories));
 	}
 
-	public void loadContactOffice(int id, List<ContactOffice> contactOffices2) {
-		if (id == 0) {
-			officeGrid.setModel(new ListModelList<>(contactOffices2));
-		} else {
-			List<ContactOffice> contactOffice = contactDao.getCompanyContactOffice(id);
-			officeGrid.setModel(new ListModelList<>(contactOffice));
-		}
-	}
-
-
-
 	@Listen("onClick = #finalSubmit")
 	public void saveContact() {
 		if (!validContactSection()) {
 			return;
 		}
-
-		// Check if the user is logged in and get the logged user ID
 		Session sessions = Sessions.getCurrent();
 		sessions.removeAttribute("customer");
 		int loggedUserId = (Integer) sessions.getAttribute("loggedUserId");
@@ -457,26 +507,30 @@ public class ContactController extends SelectorComposer<Component> {
 		long currentTimeMillis = System.currentTimeMillis();
 		Timestamp currentTimestamp = new Timestamp(currentTimeMillis);
 		contact.setCreatedOn(currentTimestamp);
-
 		if (contactId == 0) {
 			int generatedId = contactDao.insertContact(contact);
 			if (generatedId != 0) {
 				for (Component component : categoriesGrid.getRows().getChildren()) {
 					if (component instanceof Row) {
 						Row row = (Row) component;
-						Checkbox checkbox = (Checkbox) row.getChildren().get(1); // Adjusted index to match checkbox
-						if (checkbox.isChecked()) {
-							Category category = (Category) checkbox.getValue();
-							ContactCategory contactCategory = new ContactCategory();
-							contactCategory.setContactId(generatedId);
-							contactCategory.setCategoryId(category.getId());
-							contactDao.insertContactCategory(contactCategory);
+						List<Component> children = row.getChildren();
+						if (children.size() >= 2) { // Ensure the row has at least two children
+							Component firstChild = children.get(0); // Checkbox is now the first child
+							if (firstChild instanceof Checkbox) {
+								Checkbox checkbox = (Checkbox) firstChild;
+								if (checkbox.isChecked()) {
+									Category category = (Category) checkbox.getValue();
+									ContactCategory contactCategory = new ContactCategory();
+									contactCategory.setContactId(generatedId);
+									contactCategory.setCategoryId(category.getId());
+									contactDao.insertContactCategory(contactCategory);
+								}
+							}
 						}
 					}
 				}
 
 			}
-
 			if (generatedId != 0) {
 				for (ContactOffice contactOffice : OfficeController.temporaryOfficeList) {
 					contactOffice.setContactId(generatedId);
@@ -493,13 +547,19 @@ public class ContactController extends SelectorComposer<Component> {
 			for (Component component : categoriesGrid.getRows().getChildren()) {
 				if (component instanceof Row) {
 					Row row = (Row) component;
-					Checkbox checkbox = (Checkbox) row.getChildren().get(1); // Adjusted index to match checkbox
-					if (checkbox.isChecked()) {
-						Category category = (Category) checkbox.getValue();
-						ContactCategory contactCategory = new ContactCategory();
-						contactCategory.setContactId(contact.getId());
-						contactCategory.setCategoryId(category.getId());
-						contactDao.insertContactCategory(contactCategory);
+					List<Component> children = row.getChildren();
+					if (children.size() >= 2) { 
+						Component firstChild = children.get(0); 
+						if (firstChild instanceof Checkbox) {
+							Checkbox checkbox = (Checkbox) firstChild;
+							if (checkbox.isChecked()) {
+								Category category = (Category) checkbox.getValue();
+								ContactCategory contactCategory = new ContactCategory();
+								contactCategory.setContactId(contact.getId());
+								contactCategory.setCategoryId(category.getId());
+								contactDao.insertContactCategory(contactCategory);
+							}
+						}
 					}
 				}
 			}

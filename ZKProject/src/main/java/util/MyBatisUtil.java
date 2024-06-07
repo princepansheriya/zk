@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 public class MyBatisUtil {
+
 	private static final SqlSessionFactory sqlSessionFactory;
 
 	static {
@@ -25,4 +26,5 @@ public class MyBatisUtil {
 	public static SqlSessionFactory getSqlSessionFactory() {
 		return sqlSessionFactory;
 	}
+
 }
